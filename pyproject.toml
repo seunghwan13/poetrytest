@@ -9,6 +9,8 @@ python = "^3.9"
 Django = "4.0"
 django-ninja = "0.16.1"
 black = "21.12b0"
+django-stubs = "1.9.0"
+mypy = "0.931"
 
 [tool.poetry.dev-dependencies]
 
@@ -16,5 +18,21 @@ black = "21.12b0"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.black] # 대괄호 부분을 section이라고 칭한다
+[tool.black] # this is section
 line-length = 120
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+python_version = 3.9
+strict = true # argument and return value with type hint
+
+[[tool.mypy.overrides]]
+module = "*.migrations.*" # all file in migrations file
+ignore_errors = true # not inspect with mypy
+
+[[tool.mypy.overrides]]
+module = "manage" # manage.py file
+ignore_errors = true # not inspect with mypy
+
+[tool.django-stubs] # notify settings file location
+django_settings_module = "poetrytest.settings"
